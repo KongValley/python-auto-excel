@@ -12,9 +12,22 @@ rule = ['xls', 'xlsx']
 # 获取当前路径
 local = os.getcwd()
 
+# 输出路径
+outUrl = os.path.join(local, "output.xlsx")
+
+# 如果有之前合并完的输出文件，那就先删除
+if os.path.exists(outUrl):
+    os.remove(outUrl)
+
 # 获取当前路径下的 excel 文件列表
-excelArr = [el for el in os.listdir(local) if el.split('.')[1] in rule]
+excelArr = [os.path.join(local, el) for el in os.listdir(local) if el.split('.')[1] in rule]
 
 # 通过文件名读入数据
-wbArr = [ld(i) for i in excelArr]
+# header 的值即为设置标题所在的行数，默认为 0
+wbArr = [pd.read_excel(i, header=1) for i in excelArr]
 
+writer = pd.ExcelWriter()
+
+pd.concat(wbArr).to_excel(writer, 'Sheet1', index=False)
+
+writer.save()

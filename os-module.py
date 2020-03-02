@@ -5,8 +5,8 @@
 
 import os
 
-# rule = ['xls', 'xlsx']
-rule = ['py']
+rule = ['xls', 'xlsx']
+# rule = ['py'] # just for test
 
 # 获取当前路径
 local = os.getcwd()
