@@ -26,7 +26,7 @@ excelArr = [os.path.join(local, el) for el in os.listdir(local) if el.split('.')
 # header 的值即为设置标题所在的行数，默认为 0
 wbArr = [pd.read_excel(i, header=1) for i in excelArr]
 
-writer = pd.ExcelWriter()
+writer = pd.ExcelWriter(outUrl)
 
 pd.concat(wbArr).to_excel(writer, 'Sheet1', index=False)
 
